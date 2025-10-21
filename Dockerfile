@@ -3,7 +3,7 @@ FROM alpine:3.19
 # Automatically set by Docker when building for multiple platforms
 ARG TARGETARCH
 
-# Install runtime dependencies
+# Install runtime dependencies for all transfer methods
 RUN apk add --no-cache \
     rsync \
     openssh-client \
@@ -14,7 +14,7 @@ RUN apk add --no-cache \
 COPY binaries/${TARGETARCH}/malai /usr/local/bin/malai
 RUN chmod +x /usr/local/bin/malai
 
-# Copy entrypoint script
+# Copy entrypoint script that routes to transfer method handlers
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
